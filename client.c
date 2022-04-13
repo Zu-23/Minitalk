@@ -12,14 +12,13 @@ int	main(int argc, char **argv)
    int		bit;
    char 	*msg;
 	
-	pid = ft_atoi(arv[1]);
+	pid = ft_atoi(argv[1]);
   	bit = 0;
 	i = 0;
-	msg = argv[1];
+	msg = argv[2];
   
    if (argc != 2)
    	return (1);
-	
   	while(msg[i])
 	{
 		while (bit < 8)
