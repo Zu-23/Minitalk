@@ -12,26 +12,35 @@ void handle_sigint(int sig)
 
 	if (bits > 7 || bin == 0)
 	{
-		printf("%c\n",letter);
+		printf("did i enter?");
+		if(letter != 0)
+			//printf("result is %c \n",letter);
 		bits = 0;
 		letter = 0;
 		bin = 128;
 	}
 	if (sig == SIGUSR1)
 	{
-		printf("i got sig\n");
+		//printf("i got sig\n");
 		letter += bin;
 		bin /= 2;
 		bits++;
+		printf("value of letter:%d, bin:%d bits:%d\n",letter,bin,bits);
 	}
-	if (sig == SIGUSR2)
+	else if (sig == SIGUSR2)
 	{
 		bin /= 2;
 		bits++;
 		null++;
+		printf("value of letter:%d, bin:%d bits:%d\n",letter,bin,bits);
+
 	}
-	if (null == 8)
-		return ;
+	if (null == 8 || bits > 7)
+	{
+		printf("%c\n",letter);
+		//return ;
+	}
+	
 }
   
 int main()
