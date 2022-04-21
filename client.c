@@ -22,16 +22,13 @@ int	main(int argc, char **argv)
 	{
 		while (bit < 8)
 		{
-			//printf("im inside while");
 			if (msg[i] & 128 >> bit)
 			{
-				//printf("im in if");
 				kill(pid, SIGUSR1);
 				usleep(100);
 			}
 			else
 			{
-				//printf("im in else");
 				kill(pid,SIGUSR2);
 				usleep(100);
 			}
@@ -39,5 +36,13 @@ int	main(int argc, char **argv)
 		}
 		bit = 0;
 		i++;
+	}
+	usleep(100);
+	while (bit < 8)
+	{
+		//printf("%d	",bit);
+		kill(pid,SIGUSR2);
+		bit++;
+		usleep(40);
 	}
 }
