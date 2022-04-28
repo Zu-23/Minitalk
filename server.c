@@ -1,61 +1,45 @@
-#include<stdio.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   server.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: zhaddoum <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/27 17:34:43 by zhaddoum          #+#    #+#             */
+/*   Updated: 2022/04/28 15:54:29 by zhaddoum         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include"ft_printf/ft_printf.h"
 #include<unistd.h>
 #include<signal.h>
 #include<sys/wait.h>
-#include<stdlib.h>
-#include"LIBFT_42/libft.h"
-int strl(char *str)
+#include<stdio.h>
+
+int	g_pid = 0;
+
+void	bits_and_bins(int *bits, int *bin)
 {
-	int len;
-
-	len = 0;
-	if (!str)
-		return(0);
-	while (str[len])
-		len++;
-
-	return(len);
+	*bits += 1;
+	*bin /= 2;
 }
-char *msgconc(char **msg,char letter)
-{
-	int 	len;
-	char	*tmp;
-	int		i;
 
-	if (!letter)
-		return (NULL);
-	len = strl((*msg));
-	tmp = (char *)malloc(len + 2);
-	i = -1;
-	if ((*msg))
+void	handle_sigint(int sig, siginfo_t *si, void *t)
+{
+	static char	letter;
+	static int	bin;
+	static int	bits;
+
+	if (g_pid != si->si_pid)
 	{
-		while ((*msg)[++i])
-			tmp[i] = (*msg)[i];
-	free((*msg));
+		g_pid = si->si_pid;
+		bin = 0;
 	}
-	if (i == -1)
-		tmp[++i] = letter;
-	else
-		tmp[i] = letter;
-	tmp[++i] = '\0';
-	*msg = tmp;
-}
-
-void handle_sigint(int sig)
-{
-   static char	letter;
-   char 		*msg;
-   static int	bin;
-   static int	bits;
-   static int	null;
-
-	msg = NULL;
 	if (bits > 7 || bin == 0)
 	{
 		bits = 0;
 		letter = 0;
 		bin = 128;
-		null = 0;
 	}
 	if (sig == SIGUSR1)
 	{
@@ -64,40 +48,22 @@ void handle_sigint(int sig)
 		bits++;
 	}
 	else if (sig == SIGUSR2)
-	{
-		bin /= 2;
-		bits++;
-		//printf("null:%d bits:%d\n",null,bits);
-		null++;
-	}
-	if( bits > 7)
-	{
-		//printf("%d\n",null);
-		msgconc(&msg, letter);
-		printf("null: %d\n and msg: %s\n",null,msg);
-		if (null > 7)
-		{
-			printf("whats my value %d\n",null);
-			printf("%s\n",msg);
-			//free(msg);
-			//msg = NULL;
-		}
-	}
-	
+		bits_and_bins(&bits, &bin);
+	if (bits > 7)
+		write(1, &letter, 1);
 }
-  
-int main()
+
+int	main(void)
 {
-	int pid;
+	int					pid;
+	int					clipid;
+	struct sigaction	act;
 
 	pid = getpid();
-	printf("PID:%d\n",pid);
-	// struct sigaction act;
-	// act.sa_sigaction = handle_sigint;
-	// sigaction(SIGUSR1,&act,NULL);
-	// sigaction(SIGUSR2,&act,NULL);
-	signal(SIGUSR1, handle_sigint);
-	signal(SIGUSR2, handle_sigint);
-	while(1)
-	pause();
+	ft_printf("PID:%d\n", pid);
+	act.sa_sigaction = handle_sigint;
+	sigaction(SIGUSR1, &act, NULL);
+	sigaction(SIGUSR2, &act, NULL);
+	while (1)
+		pause();
 }
