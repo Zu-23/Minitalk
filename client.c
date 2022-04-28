@@ -6,7 +6,7 @@
 /*   By: zhaddoum <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 17:34:37 by zhaddoum          #+#    #+#             */
-/*   Updated: 2022/04/28 15:56:11 by zhaddoum         ###   ########.fr       */
+/*   Updated: 2022/04/28 21:40:02 by zhaddoum         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include<unistd.h>
 #include<signal.h>
 #include<sys/wait.h>
-#include "libft/libft.h"
 
 int	checkpid(char *pid, int arg)
 {
