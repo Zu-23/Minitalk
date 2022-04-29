@@ -6,11 +6,11 @@
 /*   By: zhaddoum <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 15:14:13 by zhaddoum          #+#    #+#             */
-/*   Updated: 2021/11/17 15:33:35 by zhaddoum         ###   ########.fr       */
+/*   Updated: 2022/04/29 13:03:23 by zhaddoum         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../Minitalk.h"
 
 int	ft_isalpha(int c)
 {

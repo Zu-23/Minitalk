@@ -6,15 +6,11 @@
 /*   By: zhaddoum <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 17:34:43 by zhaddoum          #+#    #+#             */
-/*   Updated: 2022/04/28 21:34:05 by zhaddoum         ###   ########.fr       */
+/*   Updated: 2022/04/29 13:38:47 by zhaddoum         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"ft_printf/ft_printf.h"
-#include<unistd.h>
-#include<signal.h>
-#include<sys/wait.h>
-#include<stdio.h>
+#include"Minitalk.h"
 
 int	g_pid = 0;
 
